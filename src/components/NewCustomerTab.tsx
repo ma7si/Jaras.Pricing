@@ -117,11 +117,10 @@ export function NewCustomerTab() {
       <div className="flex justify-end mb-4">
         <button
           onClick={toggleVat}
-          className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
-            includeVat
-              ? 'bg-[#132ef5] text-white shadow-lg'
-              : 'bg-white text-[#021441] border-2 border-gray-200 hover:border-[#132ef5]'
-          }`}
+          className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${includeVat
+            ? 'bg-[#132ef5] text-white shadow-lg'
+            : 'bg-white text-[#021441] border-2 border-gray-200 hover:border-[#132ef5]'
+            }`}
         >
           <Percent className="w-5 h-5" />
           {t('VAT (15%)', 'ضريبة القيمة المضافة (15%)')}
@@ -158,11 +157,10 @@ export function NewCustomerTab() {
               <div
                 key={plan.id}
                 onClick={() => setSelectedPlan(plan)}
-                className={`relative cursor-pointer rounded-2xl p-6 transition-all duration-300 ${
-                  isRecommended
-                    ? 'bg-[#132ef5] text-white shadow-xl scale-105 border-2 border-[#132ef5]'
-                    : 'bg-white text-[#021441] shadow-md hover:shadow-lg border border-gray-200'
-                }`}
+                className={`relative cursor-pointer rounded-2xl p-6 transition-all duration-300 ${isRecommended
+                  ? 'bg-[#132ef5] text-white shadow-xl scale-105 border-2 border-[#132ef5]'
+                  : 'bg-white text-[#021441] shadow-md hover:shadow-lg border border-gray-200'
+                  }`}
               >
                 {isRecommended && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#021441] text-white px-4 py-1 rounded-full text-sm font-semibold shadow-lg">
@@ -185,10 +183,10 @@ export function NewCustomerTab() {
                   {plan.discount_percentage > 0 ? (
                     <>
                       <div className={`text-lg line-through ${isRecommended ? 'text-blue-200' : 'text-[#8089a0]'}`}>
-                        {plan.yearly_price.toLocaleString('en-US', { maximumFractionDigits: 0 })} {t('SAR', 'ريال')}
+                        {applyVat(plan.yearly_price).toLocaleString('en-US', { maximumFractionDigits: 0 })} {t('SAR', 'ريال')}
                       </div>
                       <div className={`text-3xl font-bold ${isRecommended ? 'text-white' : 'text-[#132ef5]'}`}>
-                        {(plan.yearly_price * (1 - plan.discount_percentage / 100)).toLocaleString('en-US', { maximumFractionDigits: 0 })} {t('SAR', 'ريال')}
+                        {applyVat(plan.yearly_price * (1 - plan.discount_percentage / 100)).toLocaleString('en-US', { maximumFractionDigits: 0 })} {t('SAR', 'ريال')}
                       </div>
                       <div className={`text-sm ${isRecommended ? 'text-blue-100' : 'text-green-600'} font-semibold`}>
                         {t(`Save ${plan.discount_percentage}%`, `وفر ${plan.discount_percentage}٪`)}
@@ -197,7 +195,7 @@ export function NewCustomerTab() {
                   ) : (
                     <>
                       <div className={`text-3xl font-bold ${isRecommended ? 'text-white' : 'text-[#132ef5]'}`}>
-                        {plan.yearly_price.toLocaleString('en-US', { maximumFractionDigits: 0 })} {t('SAR', 'ريال')}
+                        {applyVat(plan.yearly_price).toLocaleString('en-US', { maximumFractionDigits: 0 })} {t('SAR', 'ريال')}
                       </div>
                       <div className={`text-sm ${isRecommended ? 'text-blue-100' : 'text-[#8089a0]'}`}>
                         {t('per year', 'سنوياً')}
@@ -258,19 +256,17 @@ export function NewCustomerTab() {
               <div
                 key={addon.id}
                 onClick={() => toggleAddon(addon.id)}
-                className={`cursor-pointer rounded-xl p-5 transition-all duration-200 border-2 ${
-                  isSelected
-                    ? 'border-[#132ef5] bg-blue-50 shadow-md'
-                    : 'border-gray-200 bg-white hover:border-[#132ef5] hover:shadow-sm'
-                }`}
+                className={`cursor-pointer rounded-xl p-5 transition-all duration-200 border-2 ${isSelected
+                  ? 'border-[#132ef5] bg-blue-50 shadow-md'
+                  : 'border-gray-200 bg-white hover:border-[#132ef5] hover:shadow-sm'
+                  }`}
               >
                 <div className="flex items-start justify-between mb-3">
                   <h5 className="font-semibold text-[#021441]">
                     {language === 'en' ? addon.name_en : addon.name_ar}
                   </h5>
-                  <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
-                    isSelected ? 'bg-[#132ef5] border-[#132ef5]' : 'border-gray-300'
-                  }`}>
+                  <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${isSelected ? 'bg-[#132ef5] border-[#132ef5]' : 'border-gray-300'
+                    }`}>
                     {isSelected && <Check className="w-3 h-3 text-white" />}
                   </div>
                 </div>
@@ -278,7 +274,7 @@ export function NewCustomerTab() {
                   {language === 'en' ? addon.description_en : addon.description_ar}
                 </p>
                 <div className="text-lg font-bold text-[#132ef5]">
-                  {getAddonPrice(addon).toLocaleString('en-US')} {addon.is_onetime ? t('SAR (one-time)', 'ريال (مرة واحدة)') : t('SAR/year', 'ريال/سنة')}
+                  {applyVat(getAddonPrice(addon)).toLocaleString('en-US', { maximumFractionDigits: 0 })} {addon.is_onetime ? t('SAR (one-time)', 'ريال (مرة واحدة)') : t('SAR/year', 'ريال/سنة')}
                 </div>
               </div>
             );
@@ -298,7 +294,7 @@ export function NewCustomerTab() {
                 {language === 'en' ? selectedPlan.name_en : selectedPlan.name_ar} ({selectedPlan.units_quota} {t('units', 'وحدة')})
               </span>
               <span className="font-semibold text-[#021441]">
-                {selectedPlan.yearly_price.toLocaleString('en-US', { maximumFractionDigits: 0 })} {t('SAR', 'ريال')}
+                {applyVat(selectedPlan.yearly_price).toLocaleString('en-US', { maximumFractionDigits: 0 })} {t('SAR', 'ريال')}
               </span>
             </div>
 
@@ -308,7 +304,7 @@ export function NewCustomerTab() {
                   {t('Plan Discount', 'خصم الخطة')} ({selectedPlan.discount_percentage}%)
                 </span>
                 <span className="font-semibold">
-                  -{((selectedPlan.yearly_price * selectedPlan.discount_percentage) / 100).toLocaleString('en-US', { maximumFractionDigits: 0 })} {t('SAR', 'ريال')}
+                  -{applyVat((selectedPlan.yearly_price * selectedPlan.discount_percentage) / 100).toLocaleString('en-US', { maximumFractionDigits: 0 })} {t('SAR', 'ريال')}
                 </span>
               </div>
             )}
@@ -316,10 +312,10 @@ export function NewCustomerTab() {
             {calculateExtraUnits(selectedPlan) > 0 && (
               <div className="flex justify-between items-center">
                 <span className="text-[#8089a0]">
-                  {calculateExtraUnits(selectedPlan)} {t('extra units', 'وحدة إضافية')} × {selectedPlan.additional_unit_price} {t('SAR', 'ريال')}
+                  {calculateExtraUnits(selectedPlan)} {t('extra units', 'وحدة إضافية')} × {applyVat(selectedPlan.additional_unit_price).toLocaleString('en-US', { maximumFractionDigits: 0 })} {t('SAR', 'ريال')}
                 </span>
                 <span className="font-semibold text-[#021441]">
-                  {calculateExtraUnitsCost(selectedPlan).toLocaleString('en-US', { maximumFractionDigits: 0 })} {t('SAR', 'ريال')}
+                  {applyVat(calculateExtraUnitsCost(selectedPlan)).toLocaleString('en-US', { maximumFractionDigits: 0 })} {t('SAR', 'ريال')}
                 </span>
               </div>
             )}
@@ -330,7 +326,7 @@ export function NewCustomerTab() {
                   {t('Additional Discount', 'خصم إضافي')} ({discountPercentage}%)
                 </span>
                 <span className="font-semibold">
-                  -{(((selectedPlan.yearly_price * (1 - selectedPlan.discount_percentage / 100)) * discountPercentage) / 100).toLocaleString('en-US', { maximumFractionDigits: 0 })} {t('SAR', 'ريال')}
+                  -{applyVat(((selectedPlan.yearly_price * (1 - selectedPlan.discount_percentage / 100)) * discountPercentage) / 100).toLocaleString('en-US', { maximumFractionDigits: 0 })} {t('SAR', 'ريال')}
                 </span>
               </div>
             )}
@@ -341,7 +337,7 @@ export function NewCustomerTab() {
                   {t('Plan Subtotal', 'المجموع الفرعي للخطة')}
                 </span>
                 <span className="font-bold text-[#021441]">
-                  {calculatePlanTotalWithExtras(selectedPlan).toLocaleString('en-US', { maximumFractionDigits: 0 })} {t('SAR', 'ريال')}
+                  {applyVat(calculatePlanTotalWithExtras(selectedPlan)).toLocaleString('en-US', { maximumFractionDigits: 0 })} {t('SAR', 'ريال')}
                 </span>
               </div>
             )}
@@ -371,7 +367,7 @@ export function NewCustomerTab() {
                           )}
                         </span>
                         <span className={`font-semibold ${isIncluded ? 'text-green-600' : 'text-[#021441]'}`}>
-                          {isIncluded ? t('Included', 'مشمول') : `${getAddonPrice(addon).toLocaleString('en-US')} ${t('SAR', 'ريال')}`}
+                          {isIncluded ? t('Included', 'مشمول') : `${applyVat(getAddonPrice(addon)).toLocaleString('en-US', { maximumFractionDigits: 0 })} ${t('SAR', 'ريال')}`}
                         </span>
                       </div>
                     );

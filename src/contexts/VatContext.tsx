@@ -17,11 +17,15 @@ export function VatProvider({ children }: { children: ReactNode }) {
   };
 
   const applyVat = (amount: number) => {
-    return includeVat ? amount * 1.15 : amount;
+    // Database prices include VAT, so when includeVat is true, show original amount
+    // When includeVat is false, divide by 1.15 to remove the VAT
+    return includeVat ? amount : amount / 1.15;
   };
 
   const calculateVatAmount = (amount: number) => {
-    return includeVat ? amount * 0.15 : 0;
+    // When VAT is included, show the VAT amount (original - price without VAT)
+    // When VAT is excluded, show 0
+    return includeVat ? amount - (amount / 1.15) : 0;
   };
 
   return (
