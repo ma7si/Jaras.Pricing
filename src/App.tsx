@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { LanguageProvider } from './contexts/LanguageContext';
 import { VatProvider } from './contexts/VatContext';
 import { LanguageToggle } from './components/LanguageToggle';
+import { VatToggleFAB } from './components/VatToggleFAB';
 import { NewCustomerTab } from './components/NewCustomerTab';
 import { ExistingCustomerTab } from './components/ExistingCustomerTab';
 import { useLanguage } from './contexts/LanguageContext';
@@ -34,21 +35,19 @@ function AppContent() {
         <div className="bg-white rounded-2xl shadow-xl p-2 mb-8 inline-flex">
           <button
             onClick={() => setActiveTab('new')}
-            className={`px-8 py-4 rounded-xl font-semibold transition-all duration-300 ${
-              activeTab === 'new'
+            className={`px-8 py-4 rounded-xl font-semibold transition-all duration-300 ${activeTab === 'new'
                 ? 'bg-[#132ef5] text-white shadow-lg'
                 : 'text-[#8089a0] hover:text-[#021441]'
-            }`}
+              }`}
           >
             {t('New Customers', 'عملاء جدد')}
           </button>
           <button
             onClick={() => setActiveTab('existing')}
-            className={`px-8 py-4 rounded-xl font-semibold transition-all duration-300 ${
-              activeTab === 'existing'
+            className={`px-8 py-4 rounded-xl font-semibold transition-all duration-300 ${activeTab === 'existing'
                 ? 'bg-[#132ef5] text-white shadow-lg'
                 : 'text-[#8089a0] hover:text-[#021441]'
-            }`}
+              }`}
           >
             {t('Existing Customers', 'العملاء الحاليون')}
           </button>
@@ -62,6 +61,8 @@ function AppContent() {
           <p>© 2025 {t('Jaras Platform. All rights reserved.', 'منصة جرس. جميع الحقوق محفوظة.')}</p>
         </footer>
       </div>
+
+      <VatToggleFAB />
     </div>
   );
 }

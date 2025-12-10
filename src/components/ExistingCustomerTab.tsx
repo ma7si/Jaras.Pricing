@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Check, ArrowUpCircle, ArrowDownCircle, Calendar, Percent } from 'lucide-react';
+import { Check, ArrowUpCircle, ArrowDownCircle, Calendar } from 'lucide-react';
 import { supabase, Plan, Addon } from '../lib/supabase';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useVat } from '../contexts/VatContext';
 
 export function ExistingCustomerTab() {
   const { language, t } = useLanguage();
-  const { includeVat, toggleVat, applyVat, calculateVatAmount } = useVat();
+  const { includeVat, applyVat, calculateVatAmount } = useVat();
   const [plans, setPlans] = useState<Plan[]>([]);
   const [addons, setAddons] = useState<Addon[]>([]);
   const [currentPlan, setCurrentPlan] = useState<Plan | null>(null);
@@ -145,18 +145,6 @@ export function ExistingCustomerTab() {
 
   return (
     <div className="space-y-8">
-      <div className="flex justify-end mb-4">
-        <button
-          onClick={toggleVat}
-          className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${includeVat
-            ? 'bg-[#132ef5] text-white shadow-lg'
-            : 'bg-white text-[#021441] border-2 border-gray-200 hover:border-[#132ef5]'
-            }`}
-        >
-          <Percent className="w-5 h-5" />
-          {t('VAT (15%)', 'ضريبة القيمة المضافة (15%)')}
-        </button>
-      </div>
 
       <div className="bg-gradient-to-br from-[#f7f9fc] to-[#ffede2] rounded-2xl p-8 shadow-sm">
         <h2 className="text-2xl font-bold text-[#021441] mb-6">
